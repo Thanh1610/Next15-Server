@@ -19,7 +19,19 @@ const createUserService = async (userData: UserRegisterInput) => {
 
     const hashPassword = await bcrypt.hash(password, saltRounds);
 
-    return await User.create({ name, email, password: hashPassword, phone });
+    const res = await User.create({ name, email, password: hashPassword, phone });
+    return {
+      status: 'SUCCESS',
+      message: 'Đăng ký thành công!',
+      data: {
+        id: res._id,
+        name: res.name,
+        email: res.email,
+        phone: res.phone,
+        role: res.role,
+        createdAt: res.createdAt,
+      },
+    };
   } catch (error) {
     console.log(error);
     return null;
@@ -52,7 +64,7 @@ const loginServices = async ({ email, password }: UserLoginInput) => {
           email: user.email,
           name: user.name,
           id: user._id,
-          isAdmin: user.isAdmin,
+          role: user.role,
         },
       };
     }
