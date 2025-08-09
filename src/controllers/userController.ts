@@ -13,13 +13,17 @@ const createUser = async (req: Request, res: Response) => {
     if (!data) {
       return res.status(400).json({
         status: 'ERR',
-        message: 'Email đã tồn tại!',
+        message: 'Email already exists!',
       });
     }
+
     return res.status(201).json(data);
   } catch (error) {
     console.error('createUser error:', error);
-    return res.status(500).json({ status: 'ERR', message: 'Đã xảy ra lỗi máy chủ' });
+    return res.status(500).json({
+      status: 'ERR',
+      message: 'Internal server error',
+    });
   }
 };
 
@@ -34,7 +38,10 @@ const handleLogin = async (req: Request, res: Response) => {
     return res.status(200).json(data);
   } catch (error) {
     console.error('Login error:', error);
-    return res.status(500).json({ message: 'Đã xảy ra lỗi máy chủ.' });
+    return res.status(500).json({
+      status: 'ERR',
+      message: 'Internal server error',
+    });
   }
 };
 

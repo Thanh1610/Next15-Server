@@ -6,7 +6,7 @@ export const validate = <T>(schema: z.ZodSchema<T>, data: unknown, res: Response
   if (!result.success) {
     res.status(400).json({
       status: 'ERR',
-      message: 'Dữ liệu không hợp lệ',
+      message: 'Invalid data',
       errors: result.error.issues,
     });
     return null;
